@@ -1,9 +1,10 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Mesh } from "three";
 
 function Box() {
   const boxRef = useRef<Mesh>(null!);
+  const [active, setActive] = useState(false);
 
   useFrame(() => {
     boxRef.current.rotation.x += 0.005;
@@ -12,9 +13,12 @@ function Box() {
   });
 
   return (
-    <mesh ref={boxRef} onClick={(e) => alert("hello")}>
+    <mesh
+    scale={active ? 1.5 : 1}
+    onClick={() => setActive(!active)}
+    ref={boxRef}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={"orange"} />
+      <meshPhongMaterial color={"royalblue"} />
     </mesh>
   );
 }
