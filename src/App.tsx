@@ -7,7 +7,7 @@ function Box() {
   const boxRef = useRef<Mesh>(null!);
 
   useFrame(() => {
-    // boxRef.current.rotation.x += 0.005;
+    boxRef.current.rotation.x += 0.005;
     boxRef.current.rotation.y += 0.01;
   });
 
@@ -22,8 +22,9 @@ function Box() {
 function ThreeScene() {
   return (
     <Canvas>
-      <ambientLight />
+      <ambientLight intensity={0.7} />
       <pointLight position={[5,5,5]}/>
+      {/* <directionalLight color="orange" position={[0, 0, 5]} /> */}
       <Box />
     </Canvas>
   );
