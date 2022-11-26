@@ -1,7 +1,8 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Mesh } from "three";
-import { useSpring, animated, config } from "@react-spring/three"
+import { useSpring, animated, config } from "@react-spring/three";
+import { ContactShadows, OrbitControls } from "@react-three/drei";
 
 function Box() {
   const boxRef = useRef<Mesh>(null!);
@@ -10,13 +11,13 @@ function Box() {
   // Provides bounce when clicked
   const { scale } = useSpring({
     scale: active ? 1.5 : 1,
-    config: config.wobbly
+    config: config.wobbly,
   });
 
   useFrame(() => {
-    boxRef.current.rotation.x += 0.005;
-    boxRef.current.rotation.y += 0.01;
-    boxRef.current.rotation.z += 0.01;
+    // boxRef.current.rotation.x += 0.005;
+    // boxRef.current.rotation.y += 0.01;
+    // boxRef.current.rotation.z += 0.01;
   });
 
   return (
@@ -26,7 +27,7 @@ function Box() {
       ref={boxRef}
     >
       <boxGeometry args={[1, 1, 1]} />
-      <meshPhongMaterial color={"royalblue"} />
+      <meshPhongMaterial color={"orange"} />
     </animated.mesh>
   );
 }
@@ -35,8 +36,21 @@ function ThreeScene() {
   return (
     <Canvas>
       <ambientLight intensity={0.7} />
-      <pointLight position={[5, 5, 5]} />
+      <directionalLight position={[10, 10, 5]} />
       <Box />
+      <ContactShadows
+        frames={1}
+        position={[0, -0.5, 0]}
+        blur={1}
+        opacity={0.75}
+      />
+      <ContactShadows
+        frames={1}
+        position={[0, -0.5, 0]}
+        blur={5}
+        color="orange"
+      />
+      <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2.1} />
     </Canvas>
   );
 }
