@@ -26,6 +26,7 @@ function Box() {
       onClick={() => setActive(!active)}
       ref={boxRef}
     >
+      {/* <planeGeometry args={[1000, 1000]} /> */}
       <boxGeometry args={[1, 1, 1]} />
       <meshPhongMaterial color={"orange"} />
     </animated.mesh>
@@ -34,7 +35,8 @@ function Box() {
 
 function ThreeScene() {
   return (
-    <Canvas>
+    // start camera at specific position
+    <Canvas camera={{ position: [-5, 5, 5], fov: 50 }} > 
       <ambientLight intensity={0.7} />
       <directionalLight position={[10, 10, 5]} />
       <Box />
