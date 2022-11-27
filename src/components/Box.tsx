@@ -1,12 +1,13 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
-import { Mesh } from "three";
+import { Mesh, MathUtils } from "three";
 import { useSpring, animated, config } from "@react-spring/three";
 import { ContactShadows, OrbitControls } from "@react-three/drei";
 import { Physics, usePlane, useBox } from "@react-three/cannon";
 
 function Plane(props: any) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }));
+
   return (
     <mesh receiveShadow ref={ref}>
       <planeGeometry args={[1000, 1000]} />
@@ -18,7 +19,6 @@ function Plane(props: any) {
 function Box(props: any) {
   const [active, setActive] = useState(false);
   const [ref] = useBox(() => ({ mass: 1, ...props }));
-  // const boxRef = useRef<Mesh>(null!);
 
   // Provides bounce when clicked
   const { scale } = useSpring({
@@ -41,16 +41,34 @@ function Box(props: any) {
   );
 }
 
+let pos = {
+  x: 0,
+  y: 0,
+  z: 0,
+};
+
+function setRandomPositions() {
+  pos.x = MathUtils.randFloat(-5, 5);
+  pos.y = MathUtils.randFloat(50, 10);
+  pos.z = MathUtils.randFloat(-5, 5);
+  return pos;
+}
+
+let rows: any = [];
+for (let i = 0; i < 100; i++) {
+  setRandomPositions();
+  rows.push(<Box key={i} position={[pos.x, pos.y, pos.z]} />);
+}
+
 function ThreeScene() {
   return (
     // start camera at specific position
-    <Canvas camera={{ position: [-5, 5, 5], fov: 50 }}>
+    <Canvas camera={{ position: [-5, 5, 5], fov: 100 }}>
       <ambientLight intensity={0.7} />
       <directionalLight position={[10, 10, 5]} />
       <Physics>
         <Plane />
-        <Box position={[0, 5, 0]} />
-        <Box position={[0, 10, 0.5]} />
+        {rows}
       </Physics>
       <ContactShadows
         frames={1}
