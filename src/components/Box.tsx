@@ -3,7 +3,8 @@ import { useRef, useState } from "react";
 import { Mesh, MathUtils } from "three";
 import { useSpring, animated, config } from "@react-spring/three";
 import { ContactShadows, OrbitControls } from "@react-three/drei";
-import { Physics, usePlane, useBox } from "@react-three/cannon";
+import {Physics, usePlane, useBox } from "@react-three/cannon";
+// import { Physics, RigidBody} from "@react-three/rapier"
 
 function Plane(props: any) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }));
