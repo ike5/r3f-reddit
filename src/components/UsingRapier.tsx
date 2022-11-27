@@ -21,10 +21,9 @@ const UsingRapier = () => {
         <Physics colliders={false}>
           {/* Make a compound shape with two custom BallColliders */}
           <RigidBody position={[0, 10, 0]} restitution={1} colliders={"hull"}>
-            <Sphere />
-            <BallCollider args={[0.5]} />
             <BallCollider args={[0.5]} position={[1, 0, 0]} />
           </RigidBody>
+
           <CuboidCollider position={[0, -2, 0]} args={[20, 0.5, 20]} />
           <Debug />
         </Physics>
