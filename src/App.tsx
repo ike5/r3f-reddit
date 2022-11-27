@@ -1,9 +1,9 @@
-import ThreeScene from "./components/Box";
+import UsingRapier from "./components/UsingRapier"
 
 function App() {
   return (
     <div className="App h-screen">
-      <ThreeScene />
+      <UsingRapier />
     </div>
   );
 }
